@@ -20,8 +20,9 @@
 #define SHORT_ADDR_L 0xFE
 #define SHORT_ADDR_H 0xED
 
-#define PAN_ADDR_L 0xAC
-#define PAN_ADDR_H 0xDC
+#define RADIO_CHANNEL 20
+
+#define PAN_ADDR 0xACDC
 
 #define MAC_ADDR_0 0x01
 #define MAC_ADDR_1 0x23
@@ -65,8 +66,15 @@ enum
         STATE_TX_ARET_ON = 0x19
 };
 
-#define PHY_RSSI_MASK                                                                                                           0x1f
-#define PHY_RSSI_RANDOM_MASK                                                                            0x60
+#define PHY_RSSI_MASK 			0x1f
+#define PHY_RSSI_RANDOM_MASK	0x60
+#define TRX_BUF(i) 				_SFR_MEM8(0x180 + i)
+#define NULL (0)
+#define ReadBit(var, bit) (((var) & (1 << (bit))) != 0)
+
+static volatile uint8_t rssi;
+static uint8_t* frameData[125];
+static uint8_t frameLength;
 
 enum
 {
@@ -76,6 +84,7 @@ enum
         VERSION_D = 4
 };
 
+uint8_t currentlyTransmitting = 0;
 
 void trx_radioInit();
 void trx_setChannel(uint8_t channel);
@@ -89,10 +98,11 @@ void trx_leaveTRXSleep();
 void trx_setPANID(uint16_t panid);
 void trx_setShortAddress(uint16_t shortaddr);
 void trx_setExtAddress(uint8_t* extaddr);
+void trx_waitWhile(uint8_t status);
+void trx_getExtAddress(uint8_t* addr);
 
 uint16_t trx_getShortAddress();
 uint16_t trx_getPANID();
-uint8_t* trx_getExtAddress();
 uint8_t trx_isSleeping();
 uint8_t trx_getTRXState();
 uint8_t trx_getRandomNumber();
