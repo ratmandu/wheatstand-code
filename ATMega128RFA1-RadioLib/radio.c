@@ -5,6 +5,10 @@
  *      Author: ratmandu
  */
 
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
+#include <string.h>
 #include "radio.h"
 
 void trx_radioInit() {
