@@ -8,11 +8,6 @@
 #ifndef RADIO_H_
 #define RADIO_H_
 
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <util/delay.h>
-#include <string.h>
-
 #define TRX_MAX_FRAME_SIZE 127
 #define TRX_FIFO_SIZE 128
 #define TRX_WAIT_BEFORE

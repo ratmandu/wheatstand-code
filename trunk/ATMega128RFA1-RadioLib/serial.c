@@ -8,30 +8,22 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <string.h>
-
-#define SERIAL_0_RX_BUF_LEN	256
-#define SERIAL_1_RX_BUF_LEN 256
-
-char serial0RxBuf[SERIAL_0_RX_BUF_LEN];
-char serial1RxBuf[SERIAL_1_RX_BUF_LEN];
-uint8_t bytesInSerial0RxBuf = 0;
-uint8_t bytesInSerial1RxBuf = 0;
-uint8_t buffer0ReadLoc, buffer0WriteLoc = 0;
-uint8_t buffer1ReadLoc, buffer1WriteLoc = 0;
+#include "serial.h"
 
 void initSerial0(uint32_t baud) {
 	uint32_t baudreg;
 
-	baudreg = (F_CPU/baud/8-1);
+	baudreg = (F_CPU/baud/16-1);
 	UBRR0H = (uint8_t)((baudreg >> 8) & 0xFF);
 	UBRR0L = (uint8_t)(baudreg & 0xFF);
 	UCSR0B = (1<<TXEN0) | (1<<RXEN0) | (1<<RXCIE0) | (1<<TXCIE0);
+	UCSR0C = (1<<UCSZ00) | (1<<UCSZ01);
 }
 
 void initSerial1(uint32_t baud) {
 	uint32_t baudreg;
 
-	baudreg = (F_CPU/baud/8-1);
+	baudreg = (F_CPU/baud/16-1);
 	UBRR1H = (uint8_t)((baudreg >> 8) & 0xFF);
 	UBRR1L = (uint8_t)(baudreg & 0xFF);
 	UCSR1B = (1<<TXEN1) | (1<<RXEN1) | (1<<RXCIE1) | (1<<TXCIE1);
@@ -131,6 +123,14 @@ void buf1SkipTo(unsigned char data) {
 	do {
 		d = readFromBuffer1(&b);
 	} while (b == 0 || d != data);
+}
+
+uint8_t buf0Size() {
+	return (SERIAL_0_RX_BUF_LEN + buffer0WriteLoc - buffer0ReadLoc) % SERIAL_0_RX_BUF_LEN;
+}
+
+uint8_t buf1Size() {
+	return (SERIAL_1_RX_BUF_LEN + buffer1WriteLoc - buffer1ReadLoc) % SERIAL_1_RX_BUF_LEN;
 }
 
 ISR(USART0_RX_vect) {
