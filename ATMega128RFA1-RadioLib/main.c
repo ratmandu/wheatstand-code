@@ -9,6 +9,7 @@
 #include <util/delay.h>
 #include <avr/power.h>
 #include <avr/io.h>
+#include <string.h>
 #include "radio.c"
 
 

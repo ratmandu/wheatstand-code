@@ -11,6 +11,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
+#include <string.h>
 
 #define TRX_MAX_FRAME_SIZE 127
 #define TRX_FIFO_SIZE 128
