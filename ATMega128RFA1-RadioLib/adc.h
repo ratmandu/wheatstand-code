@@ -9,7 +9,7 @@
 #define ADC_H_
 
 uint16_t adcValues[9];
-uint8_t  currentADC = 0;
+uint8_t  currentADC;
 
 void adcInit(void);
 void adcSelect(uint8_t adcPin);
