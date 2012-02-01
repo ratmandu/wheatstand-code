@@ -13,10 +13,10 @@
 
 char serial0RxBuf[SERIAL_0_RX_BUF_LEN];
 char serial1RxBuf[SERIAL_1_RX_BUF_LEN];
-uint8_t bytesInSerial0RxBuf = 0;
-uint8_t bytesInSerial1RxBuf = 0;
-uint8_t buffer0ReadLoc, buffer0WriteLoc = 0;
-uint8_t buffer1ReadLoc, buffer1WriteLoc = 0;
+uint8_t bytesInSerial0RxBuf;
+uint8_t bytesInSerial1RxBuf;
+uint8_t buffer0ReadLoc, buffer0WriteLoc;
+uint8_t buffer1ReadLoc, buffer1WriteLoc;
 
 void initSerial0(uint32_t baud);
 void initSerial1(uint32_t baud);

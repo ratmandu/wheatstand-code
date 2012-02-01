@@ -80,7 +80,7 @@ enum
         VERSION_D = 4
 };
 
-uint8_t currentlyTransmitting = 0;
+uint8_t currentlyTransmitting;
 
 void trx_radioInit();
 void trx_setChannel(uint8_t channel);
