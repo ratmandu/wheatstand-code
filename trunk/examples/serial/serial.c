@@ -26,9 +26,7 @@ int readline(char * tmpcmd) {
 	uint8_t bufSize;
 	do {
 		// wait for input
-		PORTG |= (1<<PG0);
 		while (buf0Size() < 1) { }
-		PORTG &= ~(1<<PG0);
 		// read in a letter
 		tmpcmd[count] = readFromBuffer0(&bufSize);
 		// print the letter back out
@@ -75,6 +73,16 @@ int main(void) {
 		if (strcmp(tmpcmd, "hi") == 0) {
 			// act on it
 			serial0PutString((unsigned char *)"Hello!\r\n");
+		}
+		else if (strcmp(tmpcmd, "off") == 0) {
+			serial0PutString((unsigned char *)"Turning LED off\r\n");
+			PORTG &= ~(1<<PG0);
+		}
+		else if (strcmp(tmpcmd, "on") == 0) {
+			serial0PutString((unsigned char *)"Turning LED on\r\n");
+			PORTG |= (1<<PG0);
+		}
+		else if (strcmp(tmpcmd, "") == 0) {
 		}
 		else {
 			// error
