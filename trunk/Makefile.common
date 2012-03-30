@@ -1,0 +1,35 @@
+CC = avr-gcc
+
+MCU = atmega128rfa1
+
+CPU = 16000000
+
+CFLAGS = -Wall
+CFLAGS += -Os
+CFLAGS += -I$(MAINDIR)/lib
+CFLAGS += -fpack-struct
+CFLAGS += -fshort-enums
+CFLAGS += -std=gnu99
+CFLAGS += -funsigned-char
+CFLAGS += -funsigned-bitfields
+CFLAGS += -DF_CPU=$(CPU)UL
+#CFLAGS += -MMD
+#CFLAGS += -MP
+CFLAGS += -mmcu=$(MCU)
+
+all: $(TARGET).hex
+
+%.hex: %.elf
+	avr-objcopy -O ihex -R .eeprom -R .fuse -R .lock -R .signature $< $@
+
+%.o: %.c
+	$(CC) -c $(CFLAGS) $< -o $@
+
+program: $(TARGET).hex
+	sudo avrdude -c dragon_isp -p $(MCU) -P usb -U flash:w:$(TARGET).hex
+
+$(TARGET).elf: $(TARGET).o $(DEPENDS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+clean:
+	rm -f *.o *.elf *.hex
