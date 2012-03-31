@@ -3,8 +3,9 @@ MAINDIR := ../..
 DEPENDS=$(MAINDIR)/lib/radio.o
 
 sender:
-	$(MAKE) TARGET=sender DEPENDS=$(DEPENDS) all
+	@$(MAKE) TARGET=sender DEPENDS=$(DEPENDS) all
 
-receiver: receiver.hex
+receiver:
+	@$(MAKE) TARGET=receiver DEPENDS=$(DEPENDS) all
 
 include $(MAINDIR)/Makefile.common

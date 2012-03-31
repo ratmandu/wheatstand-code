@@ -30,3 +30,13 @@ int main(void) {
 	// if we ever get here, something bad happened
 	return 1;
 }
+
+void receive_radio(uint8_t** frameData, uint8_t frameLength) {
+	// blink LED
+	PORTG |= (1<<PG0);
+	// put your own frame decoding/data handling function here
+
+	_delay_ms(50);
+	PORTG &= ~(1<<PG0);
+	_delay_ms(150);
+}
