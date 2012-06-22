@@ -37,5 +37,5 @@ int main(void) {
 }
 
 
-void receive_radio(uint8_t** frameData, uint8_t frameLength) {
+void receive_radio(uint8_t* frameData, uint8_t frameLength) {
 }

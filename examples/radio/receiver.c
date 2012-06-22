@@ -31,7 +31,7 @@ int main(void) {
 	return 1;
 }
 
-void receive_radio(uint8_t** frameData, uint8_t frameLength) {
+void receive_radio(uint8_t* frameData, uint8_t frameLength) {
 	// blink LED
 	PORTG |= (1<<PG0);
 	// put your own frame decoding/data handling function here
